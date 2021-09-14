@@ -5,7 +5,7 @@
         <div class="text=2xl font-bold text-gray-900 sm:text-3xl text-center">
             Tags
         </div>
-        <table class="shadow-lg mx-auto w-3/5">
+        <table class="shadow-lg mx-auto w-4/5">
             <thead>
                 <tr class="text-md font-semibold text-left text-gray-900 bg-gray-300 uppercase border-b border">
                     <th class="px-4 py-3">Tag name</th>

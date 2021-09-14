@@ -44,7 +44,7 @@
                     <td class="px-4 py-3 border">
                         {{ $task->detail }}
                     </td>
-                    <td class="px-4 py-3 border">
+                    <td class="px-4 py-3 border text-center">
                         <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
                             class="bg-gray-400 rounded-xl p-2 hover:bg-gray-300 uppercase">EDIT TASK</a>
                         <a href="{{ route('tasks.destroy', ['task' => $task->id]) }}"
