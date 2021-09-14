@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Tag;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
@@ -16,7 +19,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::get();
+        $task = Task::orderBy('due_date')->get();
         return view('tasks.index', ['tasks' => $task]);
     }
 
@@ -36,8 +39,14 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => [
+                Rule::unique('Tasks')
+            ]
+        ])->validate();
+
         $task = new Task();
         $task->title = $request->input('title');
         $task->detail = $request->input('detail');
@@ -95,8 +104,14 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => [
+                Rule::unique('Tasks')->ignore($id)
+            ]
+        ])->validate();
+
         $task = Task::findOrFail($id);
         $task->title = $request->input('title');
         $task->detail = $request->input('detail');

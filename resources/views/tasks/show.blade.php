@@ -24,7 +24,7 @@
                 class="bg-green-400 rounded-xl p-2 hover:bg-green-300">EDIT TASK</a>
         </div>
         <div class="bg-red-100 border-4 border-red-200 rounded-xl p-4">
-            <span class="text-2xl">
+            <span class="text-2xl font-bold text-red-700">
                 Danger Zone
             </span>
             <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}" method="POST" class="p-4 space-y-4">

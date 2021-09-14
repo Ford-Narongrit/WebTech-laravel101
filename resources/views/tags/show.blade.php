@@ -14,10 +14,11 @@
                 </div>
             </div>
         </h2>
-        <table class="shadow-lg mx-auto w-4/5">
+        <table class="shadow-lg mx-auto w-full">
             <thead>
                 <tr class="text-md font-semibold text-left text-gray-900 bg-gray-300 uppercase border-b border">
                     <th class="px-4 py-3">No.</th>
+                    <th class="px-4 py-3">Due date</th>
                     <th class="px-4 py-3">task title</th>
                     <th class="px-4 py-3">tags</th>
                     <th class="px-4 py-3">task detail</th>
@@ -26,9 +27,12 @@
             </thead>
             <tbody>
                 @foreach ($tag->tasks as $task)
-                    <tr>
+                    <tr class="hover:bg-gray-200">
                         <td class="px-4 py-3 border">
                             {{ $loop->index + 1 }}
+                        </td>
+                        <td class="px-4 py-3 border">
+                            {{ $task->due_date->format('j/m/y') }}
                         </td>
                         <td class="px-4 py-3 border">
                             <a href="{{ route('tasks.show', ['task' => $task->id]) }}">

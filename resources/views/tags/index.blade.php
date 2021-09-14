@@ -14,7 +14,7 @@
             </thead>
             <tbody>
                 @foreach ($tags as $tag)
-                    <tr>
+                    <tr class="hover:bg-gray-200">
                         <td class="px-4 py-3 border">
                             <a href="{{ route('tags.slug', ['slug' => $tag->name]) }}" class="hover:underline">
                                 {{ $tag->name }}
