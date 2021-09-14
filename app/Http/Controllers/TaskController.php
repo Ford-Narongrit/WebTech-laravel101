@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -39,9 +41,27 @@ class TaskController extends Controller
         $task = new Task();
         $task->title = $request->input('title');
         $task->detail = $request->input('detail');
-        $task->due_date = $request->input('due_date');
+        $task->due_date = Carbon::create($request->input('due_date'));
         $task->save();
+        $tags = trim($request->input('tags'));
+        $this->updateTaskTag($task, $tags);
         return redirect()->route('tasks.index');
+    }
+
+    private function updateTaskTag($task, $tagsWithComma)
+    {
+        if ($tagsWithComma) {
+            $tag_array = [];
+            $tags = explode(",", $tagsWithComma);
+            foreach ($tags as $tag_name) {
+                $tag_name = trim($tag_name);
+                if ($tag_name) {
+                    $tag = Tag::firstOrCreate(['name' => $tag_name]);
+                    array_push($tag_array, $tag->id);
+                }
+            }
+            $task->tags()->sync($tag_array);
+        }
     }
 
     /**
@@ -82,6 +102,8 @@ class TaskController extends Controller
         $task->detail = $request->input('detail');
         $task->due_date = $request->input('due_date');
         $task->save();
+        $tags = trim($request->input('tags'));
+        $this->updateTaskTag($task, $tags);
         return redirect()->route('tasks.show', ['task' => $id]);
     }
 

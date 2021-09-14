@@ -5,6 +5,13 @@
 <div class="text-center text-xl">
     {{ $task->detail }}
 </div>
+<div class="text-center text-xl">
+    @foreach($task->tags as $tag)
+    <span>
+        {{ $tag->name }}
+    </span>
+    @endforeach
+</div>
 <div class="text-center text-xl text-red-500">
     {{ $task->due_date }}
 </div>
