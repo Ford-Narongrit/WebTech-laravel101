@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +17,12 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::resource('tasks', TaskController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('tags', TagController::class);
-Route::get('tag/{slug}', [TagController::class, 'showBySlug'])->name('tags.slug');
+Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+Route::resource('tags', \App\Http\Controllers\TagController::class)->middleware('auth');
+Route::get('tag/{slug}', [\App\Http\Controllers\TagController::class, 'showBySlug'])->name('tags.slug');
+
+require __DIR__ . '/auth.php';
